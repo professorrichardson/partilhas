@@ -80,10 +80,169 @@ export interface ApiPost {
     likes: number
     comments: number
     favorites: number
+    reviewsCount: number
+    averageRating: number | null
   }
   viewerContext: {
     isLiked: boolean
     isFavorited: boolean
+    myRating: number | null
+  }
+}
+
+export interface ApiReview {
+  id: string
+  rating: number
+  comment: string | null
+  classroom: string | null
+  adaptations: string | null
+  createdAt: string
+  updatedAt: string
+  author: {
+    id: string
+    name: string
+    avatarUrl: string | null
+  }
+}
+
+export interface ReviewsResponse {
+  summary: {
+    count: number
+    average: number
+  }
+  items: ApiReview[]
+}
+
+export interface UpsertReviewPayload {
+  rating: number
+  comment?: string
+  classroom?: string
+  adaptations?: string
+}
+
+export interface ApiLessonPlan {
+  id: string
+  title: string
+  grade: string
+  subject: string
+  objectives: string
+  digitalTools: string
+  content: string
+  createdAt: string
+  updatedAt: string
+  author: {
+    id: string
+    name: string
+    avatarUrl: string | null
+    institution: string | null
+  }
+  community: {
+    id: string
+    name: string
+    slug: string
+  } | null
+  files: ApiFile[]
+  tags: ApiTag[]
+}
+
+export interface PaginatedLessonPlansResponse {
+  items: ApiLessonPlan[]
+  meta: {
+    page: number
+    limit: number
+    total: number
+    hasMore: boolean
+  }
+}
+
+export interface CreateLessonPlanPayload {
+  title: string
+  grade: string
+  subject: string
+  objectives: string
+  digitalTools: string
+  content: string
+  communityId?: string
+  tags?: string
+}
+
+export interface ApiTutorialStep {
+  id: string
+  order: number
+  title: string
+  content: string
+  videoUrl: string | null
+}
+
+export interface ApiTutorialSummary {
+  id: string
+  title: string
+  description: string
+  tool: string
+  coverImageUrl: string | null
+  createdAt: string
+  author: {
+    id: string
+    name: string
+    avatarUrl: string | null
+  }
+  stepsCount: number
+  completionsCount: number
+}
+
+export interface ApiTutorialDetail {
+  id: string
+  title: string
+  description: string
+  tool: string
+  coverImageUrl: string | null
+  createdAt: string
+  author: {
+    id: string
+    name: string
+    avatarUrl: string | null
+  }
+  steps: ApiTutorialStep[]
+  completionsCount: number
+  viewerContext: {
+    completedStepIds: string[]
+    isCompleted: boolean
+    certificateId: string | null
+  }
+}
+
+export interface PaginatedTutorialsResponse {
+  items: ApiTutorialSummary[]
+  meta: {
+    page: number
+    limit: number
+    total: number
+    hasMore: boolean
+  }
+}
+
+export interface CreateTutorialStepPayload {
+  title: string
+  content: string
+  videoUrl?: string
+}
+
+export interface CreateTutorialPayload {
+  title: string
+  description: string
+  tool: string
+  coverImageUrl?: string
+  steps: CreateTutorialStepPayload[]
+}
+
+export interface ApiCertificate {
+  id: string
+  code: string
+  issuedAt: string
+  tutorial: {
+    id: string
+    title: string
+    tool: string
   }
 }
 

@@ -2142,3 +2142,67 @@ select {
     display: none !important;
   }
 }
+/* Estrelas de avaliação, planos de aula, tutoriais e certificados */
+.star-rating {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.star-rating-item {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--border-strong, #d8d2e4);
+  cursor: default;
+  display: inline-flex;
+}
+
+.star-rating.interactive .star-rating-item {
+  cursor: pointer;
+}
+
+.star-rating-item.filled {
+  color: var(--warning-soft, #ffe9c5);
+  filter: none;
+}
+
+.star-rating-item.filled svg {
+  fill: #f5a623;
+  stroke: #f5a623;
+}
+
+.post-rating-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-rating-link svg {
+  fill: #f5a623;
+  stroke: #f5a623;
+}
+
+.review-form {
+  border-top: 1px solid var(--border, #ece7f5);
+  padding-top: 16px;
+  margin-bottom: 16px;
+}
+
+.review-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tutorial-step-form,
+.tutorial-step-card {
+  border: 1px solid var(--border, #ece7f5);
+}
+
+.tutorial-step-card .icon-button.active {
+  background: var(--success-soft);
+  color: #1f7a3f;
+}

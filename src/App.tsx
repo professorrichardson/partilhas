@@ -2,14 +2,19 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthPage } from './components/auth/AuthPage'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { AppShell } from './components/layout/AppShell'
+import { CertificatesPage } from './pages/CertificatesPage'
 import { CommunitiesPage } from './pages/CommunitiesPage'
 import { CommunityDetailPage } from './pages/CommunityDetailPage'
 import { FavoritesPage } from './pages/FavoritesPage'
 import { HomePage } from './pages/HomePage'
+import { LessonPlanDetailPage } from './pages/LessonPlanDetailPage'
+import { LessonPlansPage } from './pages/LessonPlansPage'
 import { LibraryPage } from './pages/LibraryPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PostDetailPage } from './pages/PostDetailPage'
 import { ProfilePage } from './pages/ProfilePage'
+import { TutorialDetailPage } from './pages/TutorialDetailPage'
+import { TutorialsPage } from './pages/TutorialsPage'
 
 function App() {
   return (
@@ -28,6 +33,11 @@ function App() {
             <Route path="/biblioteca/:postId" element={<PostDetailPage variant="biblioteca" />} />
             <Route path="/perfil" element={<ProfilePage />} />
             <Route path="/favoritos" element={<FavoritesPage />} />
+            <Route path="/planos-de-aula" element={<LessonPlansPage />} />
+            <Route path="/planos-de-aula/:lessonPlanId" element={<LessonPlanDetailPage />} />
+            <Route path="/tutoriais" element={<TutorialsPage />} />
+            <Route path="/tutoriais/:tutorialId" element={<TutorialDetailPage />} />
+            <Route path="/certificados" element={<CertificatesPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Route>

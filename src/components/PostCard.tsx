@@ -1,4 +1,4 @@
-import { Bookmark, Heart, MessageCircle, Send, Share2, Images } from 'lucide-react'
+import { Bookmark, Heart, MessageCircle, Send, Share2, Images, Star } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatFileSize, formatRelativeDate, getInitials } from '../lib/format'
@@ -241,6 +241,13 @@ export function PostCard({
           <Bookmark size={18} />
           {post.metrics.favorites}
         </span>
+
+        {post.metrics.averageRating ? (
+          <Link to={detailHref} className="post-rating-link">
+            <Star size={18} />
+            {post.metrics.averageRating.toFixed(1)} ({post.metrics.reviewsCount})
+          </Link>
+        ) : null}
       </footer>
 
       {post.comments.length > 0 ? (

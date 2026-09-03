@@ -1,15 +1,23 @@
 import { appConfig } from './env'
 import type {
+  ApiCertificate,
   ApiCommunity,
   ApiCommunityDetail,
+  ApiLessonPlan,
   ApiPost,
+  ApiTutorialDetail,
   AuthResponse,
   CreateCommunityPayload,
+  CreateTutorialPayload,
   CurrentUser,
   LoginPayload,
+  PaginatedLessonPlansResponse,
   PaginatedPostsResponse,
+  PaginatedTutorialsResponse,
   RegisterPayload,
+  ReviewsResponse,
   UpdateProfilePayload,
+  UpsertReviewPayload,
 } from '../types/api'
 
 type ApiRequestOptions = {
@@ -175,4 +183,87 @@ export function removeFavorite(token: string, postId: string) {
     method: 'DELETE',
     token,
   })
+}
+
+export function getPostReviews(postId: string) {
+  return apiRequest<ReviewsResponse>(`/reviews/posts/${postId}`)
+}
+
+export function upsertPostReview(token: string, postId: string, payload: UpsertReviewPayload) {
+  return apiRequest<ReviewsResponse['items'][number]>(`/reviews/posts/${postId}`, {
+    method: 'POST',
+    token,
+    body: payload,
+  })
+}
+
+export function removePostReview(token: string, postId: string) {
+  return apiRequest<{ message: string }>(`/reviews/posts/${postId}`, {
+    method: 'DELETE',
+    token,
+  })
+}
+
+export function getLessonPlans(params: Record<string, string | undefined> = {}) {
+  return apiRequest<PaginatedLessonPlansResponse>(`/lesson-plans${buildQuery(params)}`)
+}
+
+export function getLessonPlanById(lessonPlanId: string) {
+  return apiRequest<ApiLessonPlan>(`/lesson-plans/${lessonPlanId}`)
+}
+
+export function createLessonPlan(token: string, formData: FormData) {
+  return apiRequest<ApiLessonPlan>('/lesson-plans', {
+    method: 'POST',
+    token,
+    body: formData,
+  })
+}
+
+export function getTutorials(params: Record<string, string | undefined> = {}) {
+  return apiRequest<PaginatedTutorialsResponse>(`/tutorials${buildQuery(params)}`)
+}
+
+export function getTutorialById(tutorialId: string, token?: string | null) {
+  return apiRequest<ApiTutorialDetail>(`/tutorials/${tutorialId}`, { token })
+}
+
+export function createTutorial(token: string, payload: CreateTutorialPayload) {
+  return apiRequest<ApiTutorialDetail>('/tutorials', {
+    method: 'POST',
+    token,
+    body: payload,
+  })
+}
+
+export function markTutorialStepComplete(token: string, tutorialId: string, stepId: string) {
+  return apiRequest<ApiTutorialDetail>(`/tutorials/${tutorialId}/steps/${stepId}/complete`, {
+    method: 'POST',
+    token,
+  })
+}
+
+export function unmarkTutorialStepComplete(token: string, tutorialId: string, stepId: string) {
+  return apiRequest<ApiTutorialDetail>(`/tutorials/${tutorialId}/steps/${stepId}/complete`, {
+    method: 'DELETE',
+    token,
+  })
+}
+
+export function getMyCertificates(token: string) {
+  return apiRequest<ApiCertificate[]>('/certificates', { token })
+}
+
+export async function openCertificatePdf(token: string, certificateId: string) {
+  const response = await fetch(`${appConfig.apiUrl}/certificates/${certificateId}/pdf`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+
+  if (!response.ok) {
+    throw new ApiError('Não foi possível gerar o certificado agora.', response.status)
+  }
+
+  const blob = await response.blob()
+  const url = URL.createObjectURL(blob)
+  window.open(url, '_blank', 'noopener')
 }

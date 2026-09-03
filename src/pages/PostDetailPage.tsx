@@ -33,6 +33,7 @@ import {
 import { sanitizeRichText } from '../lib/richText'
 import type { ApiPost } from '../types/api'
 import { replacePostInCollection } from './helpers'
+import { ReviewsSection } from '../components/reviews/ReviewsSection'
 
 interface PostDetailPageProps {
   variant: 'partilha' | 'biblioteca'
@@ -148,6 +149,15 @@ export function PostDetailPage({ variant }: PostDetailPageProps) {
     } finally {
       setIsCommenting(false)
     }
+  }
+
+  async function handleReviewed() {
+    if (!postId) {
+      return
+    }
+
+    const updatedPost = await getPostById(postId, token)
+    handlePostUpdated(updatedPost)
   }
 
   if (isLoading) {
@@ -355,6 +365,8 @@ export function PostDetailPage({ variant }: PostDetailPageProps) {
                 </button>
               </form>
             </section>
+
+            <ReviewsSection post={post} token={token} onReviewed={handleReviewed} />
           </article>
         </div>
 

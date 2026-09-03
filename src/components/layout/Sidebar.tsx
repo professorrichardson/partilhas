@@ -1,7 +1,10 @@
 import {
+  Award,
   BookCopy,
   BookOpenText,
+  GraduationCap,
   Heart,
+  NotebookPen,
   Shapes,
   UserRound,
 } from 'lucide-react'
@@ -9,8 +12,11 @@ import { NavLink } from 'react-router-dom'
 
 export const navItems = [
   { to: '/', label: 'Partilhas', subtitle: 'Experiências e atividades', icon: BookOpenText, end: true },
+  { to: '/planos-de-aula', label: 'Planos de Aula', subtitle: 'Prontos para aplicar', icon: NotebookPen },
+  { to: '/tutoriais', label: 'Tutoriais', subtitle: 'Aprenda ferramentas digitais', icon: GraduationCap },
   { to: '/comunidades', label: 'Comunidades', subtitle: 'Grupos por temas', icon: Shapes },
   { to: '/biblioteca', label: 'Biblioteca', subtitle: 'Materiais organizados', icon: BookCopy },
+  { to: '/certificados', label: 'Certificados', subtitle: 'Suas conclusões', icon: Award },
   { to: '/perfil', label: 'Meu Perfil', subtitle: 'Dados e histórico', icon: UserRound },
   { to: '/favoritos', label: 'Favoritos', subtitle: 'Conteúdos salvos', icon: Heart },
 ]
